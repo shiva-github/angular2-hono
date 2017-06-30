@@ -1,6 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+	background-image: url("assets/images/background-wallpaper-7.jpg");
+}
 .logo{
-	width: 60px;
+	width: 100px;
+}
+.margin-icons-header{
+	margin: 15px 0px;
+}
+.header-block{
+	background-color: #E9E9E9;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	margin-bottom: 15px;
 }
 .form-bg{
 	background-color: #E9E9E9;
@@ -36,6 +48,7 @@
 .nav-links{
 	padding: 0px 15px;
 	color: #333;
+	font-size: 20px;
 }
 .home{
 	font-size: 36px !important;
