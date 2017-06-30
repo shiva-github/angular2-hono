@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+.logo{
+	width: 60px;
+}
+.form-bg{
+	background-color: #E9E9E9;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-radius: 5px;
+	border: 1px solid #f7f7f7;
+}
+.header-box{
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.inputbox{
+	width: 300px;
+    border-radius: 5px;
+    border: 1px solid #d3d3d3;
+    padding: 5px;
+}
+.inputbox2{
+	outline: none;
+    width: 345px;
+    padding: 5px;
+}
+.bottom-margin{
+	margin-bottom: 15px;
+}
+.fix-label{
+	margin-top: 7px;
+}
+.textarea1{
+   resize: none;
+}
+.nav-links{
+	padding: 0px 15px;
+	color: #333;
+}
+.home{
+	font-size: 36px !important;
+    margin-top: -5px;
+}
