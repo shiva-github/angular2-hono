@@ -7,7 +7,7 @@
 					<label class="fix-label pull-right">Link Name: </label>
 				</div>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-					<input type="text" name="something" class="inputbox2">
+					<input type="text" [(ngModel)]="lname" name="lname" class="inputbox2">
 				</div>
 			</div>
 			<div class="bottom-margin row">
@@ -15,7 +15,7 @@
 					<label class="fix-label pull-right">Link URL: </label>
 				</div>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-					<input type="text" name="something" class="inputbox2">
+					<input type="text" [(ngModel)]="lurl" name="lurl" class="inputbox2">
 				</div>
 			</div>
 			<div class="bottom-margin row">
@@ -23,9 +23,9 @@
 					<label class="fix-label pull-right">Link Type: </label>
 				</div>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-					<select class="inputbox2">
-						<option>Add to links table.</option>
+					<select class="inputbox2"  [(ngModel)]="ltype" name="ltype">
 						<option>Add to documents table.</option>
+						<option>Add to links table.</option>
 					</select>
 				</div>
 			</div>
@@ -34,7 +34,7 @@
 					<label class="fix-label pull-right">Link Type: </label>
 				</div>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-					<textarea class="inputbox2 textarea1"></textarea>
+					<textarea class="inputbox2 textarea1" [(ngModel)]="description" name="description"></textarea>
 				</div>
 			</div>
 			<div class="row">
