@@ -6,7 +6,7 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col col-xs-6">
-								<h3 class="panel-title">Panel Heading</h3>
+								<h3 class="panel-title">BookMarks</h3>
 							</div>
 							<div class="col col-xs-6 text-right">
 								<button type="button" class="btn btn-sm btn-primary btn-create">Create New</button>
@@ -30,15 +30,15 @@
 									<td class="hidden-xs" >{{single_link.id}}</td>
 									<td>
 										<span *ngIf="!single_link.edit">{{single_link.name}}</span>
-										<input type="text" *ngIf="single_link.edit" name="name{{single_link.id}}" [(ngModel)]="single_link.name">
+										<input class="inputbox2" type="text" *ngIf="single_link.edit" name="name{{single_link.id}}" [(ngModel)]="single_link.name">
 									</td>
 									<td class="width-table-cell">
 										<span *ngIf="!single_link.edit">{{single_link.description}}</span>
-										<input type="text" *ngIf="single_link.edit" name="description{{single_link.id}}" [(ngModel)]="single_link.description">
+										<input class="inputbox2" type="text" *ngIf="single_link.edit" name="description{{single_link.id}}" [(ngModel)]="single_link.description">
 										
 									</td>
 									<td align="center">
-										<a class="btn btn-primary" (click)="edit(single_link.id)"><em class="fa fa-pencil-square-o"></em></a>
+										<a class="btn btn-primary" (click)="edit(single_link.id)"><em [ngClass]="{'fa': true, 'fa-pencil-square-o': !single_link.edit, 'fa-check': single_link.edit}"></em></a>
 										<a class="btn btn-primary" *ngIf="!single_link.edit" target="_blank" href="{{single_link.link}}"><em class="fa fa-external-link"></em></a>
 										<a class="btn btn-primary" *ngIf="!single_link.edit" (click)="upvote(single_link.id)"><em class="fa fa-thumbs-up"></em></a>
 										<a class="btn btn-primary" *ngIf="single_link.upvote > 0 && !single_link.edit"  (click)="downvote(single_link.id)"><em class="fa fa-thumbs-down"></em></a>

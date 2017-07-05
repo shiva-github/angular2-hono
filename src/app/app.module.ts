@@ -10,6 +10,9 @@ import { FooterComponent } from './footer/footer.component';
 import { LinksTableComponent } from './links-table/links-table.component';
 import { LoginComponent } from './login/login.component';
 
+
+// import { AuthService } from './authorization.service';
+
 @NgModule({
   declarations: [
   AppComponent,
@@ -30,7 +33,7 @@ import { LoginComponent } from './login/login.component';
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: LoginComponent
   },
   {
     path: 'formdata',

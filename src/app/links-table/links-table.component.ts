@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { LinksTableService } from './links-table.service';
 
 @Component({
 	selector: 'app-links-table',
 	templateUrl: './links-table.component.html',
-	styleUrls: ['./links-table.component.css']
+	styleUrls: ['./links-table.component.css'],
+	providers: [LinksTableService]
 })
 export class LinksTableComponent implements OnInit {
 	page: Page = {
@@ -13,57 +15,15 @@ export class LinksTableComponent implements OnInit {
 	recPerPage:number = 5;
 	showPageNumbers :number[]; //for pagination
 	linkdata :LinkData[];
-	loadData :LinkData[] = [{
-		id: 1,
-		name: 'google link',
-		description: 'test description 1',
-		upvote: 5,
-		link: 'http://google.com/',
-		datetime: "1 July 2017",
-		edit: false
-	},
-	{
-		id: 2,
-		name: 'yahoo link',
-		description: 'test description 2',
-		upvote: 3,
-		link: 'http://yahoo.com/',
-		datetime: "9 April 2016",
-		edit: false
-	},
-	{
-		id: 3,
-		name: 'abc link',
-		description: 'test description 3',
-		upvote: 3,
-		link: 'http://askdfj.com/',
-		datetime: "9 April 2015",
-		edit: false
-	},
-	{
-		id: 4,
-		name: 'abc link',
-		description: 'test description 4',
-		upvote: 4,
-		link: 'http://askdfj.com/',
-		datetime: "9 April 2014",
-		edit: false
-	},
-	{
-		id: 5,
-		name: 'abc link',
-		description: 'test description 5',
-		upvote: 5,
-		link: 'http://askdfj.com/',
-		datetime: "9 April 2015",
-		edit: false
-	}
-	];
+	linkstableservice: LinksTableService;
 	totalCount: number;
-	constructor() { 
+	constructor(linkstableservice: LinksTableService) { 
+		this.linkstableservice = linkstableservice;
 		this.page.current = 1;
-		this.totalCount = this.loadData.length;
-		this.linkdata = this.loadData;
+		this.totalCount = this.linkstableservice.getTotalCount();// this.loadData.length;
+		this.linkdata = this.linkstableservice.getLinks(1);
+		
+		// this.linkdata = linkstableservice.getLinks();
 		this.update_pagination(this.totalCount);
 	}
 	ngOnInit() {
@@ -73,6 +33,7 @@ export class LinksTableComponent implements OnInit {
 		if(value != this.page.current){
 			this.page.current = value;
 			// service call for record of the page
+			this.linkdata = this.linkstableservice.getLinks(value);
 		}
 		// load current data
 	}
@@ -91,20 +52,23 @@ export class LinksTableComponent implements OnInit {
 	//---------------------- page operations ----------------------//
 	deleteLink(linkId){
 		var key = this.getIndex(linkId);
-		var index = this.linkdata.indexOf(this.linkdata[key], 0);
-		if (index > -1) {
-			this.linkdata.splice(index, 1);
-		}
-		this.totalCount = this.totalCount-1;
+		this.linkstableservice.deleteLink(linkId);
+		this.linkdata = this.linkstableservice.getLinks(this.page.current);
+		// var index = this.linkdata.indexOf(this.linkdata[key], 0);
+		// if (index > -1) {
+		// 	this.linkdata.splice(index, 1);
+		// }
+		this.totalCount = this.linkstableservice.getTotalCount();
 		this.update_pagination(this.totalCount);
 	}
 	edit(editId){
-		// console.log(this.getIndex(editId));
-		if(this.linkdata[editId-1].edit){
-			this.linkdata[editId-1].edit = false;
+		var linkIndex = this.getIndex(editId);
+		if(this.linkdata[linkIndex].edit){
+			this.linkdata[linkIndex].edit = false;
+			console.log();
 		}
 		else{
-			this.linkdata[editId-1].edit = true;
+			this.linkdata[linkIndex].edit = true;
 		}
 	}
 	downvote(id){
