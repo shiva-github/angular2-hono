@@ -9,6 +9,7 @@ import { DataFormComponent } from './data-form/data-form.component';
 import { FooterComponent } from './footer/footer.component';
 import { LinksTableComponent } from './links-table/links-table.component';
 import { LoginComponent } from './login/login.component';
+import { UploadDocComponent } from './upload-doc/upload-doc.component';
 
 
 // import { AuthService } from './authorization.service';
@@ -20,7 +21,8 @@ import { LoginComponent } from './login/login.component';
   DataFormComponent,
   FooterComponent,
   LinksTableComponent,
-  LoginComponent
+  LoginComponent,
+  UploadDocComponent
   ],
   imports: [
   BrowserModule,
@@ -42,6 +44,10 @@ import { LoginComponent } from './login/login.component';
   {
     path: 'links',
     component: LinksTableComponent
+  },
+  {
+    path: 'upload-doc',
+    component: UploadDocComponent
   }
   ])
   ],
