@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
 	username: string;
 	password: string;
-	constructor(router: RouterModule) {
+	constructor() {
 		this.username = this.login.username;
 		this.password = this.login.password;
 	}
