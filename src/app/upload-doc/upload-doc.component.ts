@@ -18,8 +18,8 @@ export class UploadDocComponent implements OnInit {
 	constructor() { 
 		this.hidethis = false;
 		this.upload_file_name = "No File Selected.";
-		this.sdescription ="abc";
-		this.description ="abc";
+		this.sdescription ="abc short name";
+		this.description ="abc description";
 		this.settingClass = false;
 	}
 
@@ -47,6 +47,7 @@ export class UploadDocComponent implements OnInit {
 		this.hidethis = true;
 		var filedata = e.dataTransfer.files[0];
 		let fileName = filedata.name;
+		this.selectedFile = filedata;
 		this.upload_file_name = "Selected File: " + fileName;
 		// this.uploadObj.inputFile = filedata;
 	}
