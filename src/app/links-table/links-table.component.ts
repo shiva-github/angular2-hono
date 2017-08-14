@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LinksTableService } from './links-table.service';
+import { config, ConfigFunctions } from '../config';
 
 @Component({
 	selector: 'app-links-table',
@@ -17,23 +18,34 @@ export class LinksTableComponent implements OnInit {
 	linkdata :LinkData[];
 	linkstableservice: LinksTableService;
 	totalCount: number;
+	switch: boolean;
 	constructor(linkstableservice: LinksTableService) { 
 		this.linkstableservice = linkstableservice;
 		this.page.current = 1;
-		this.totalCount = this.linkstableservice.getTotalCount();// this.loadData.length;
-		this.linkdata = this.linkstableservice.getLinks(1);
-		
-		// this.linkdata = linkstableservice.getLinks();
-		this.update_pagination(this.totalCount);
+		this.totalCount = 11;
 	}
 	ngOnInit() {
+		//show all links
+		this.linkstableservice.getLinks(1).subscribe(data =>{
+			this.linkdata = data;
+		});
+		// update count for the total count
+		this.linkstableservice.getTotalCount().subscribe(data =>{
+			this.totalCount = data[0]['count'];
+			this.update_pagination(this.totalCount);
+		});
 	}
 	//---------------------- pagination chnage ----------------------//
 	updatePage(value){
 		if(value != this.page.current){
 			this.page.current = value;
 			// service call for record of the page
-			this.linkdata = this.linkstableservice.getLinks(value);
+			this.linkstableservice.getLinks(value).subscribe(data =>{
+				this.linkdata = data;
+			},
+			err =>{
+				console.log(err);
+			});
 		}
 		// load current data
 	}
@@ -48,24 +60,35 @@ export class LinksTableComponent implements OnInit {
 		this.page.size = ab.length;
 	}
 	//---------------------- pagination chnage ----------------------//
-	
+
+	//---------------------- Switch Operation start ----------------------//
+	switchView(){
+		if(this.switch){
+			console.log(true);
+		}
+		if(!this.switch){
+			console.log(false);
+		}
+		
+	}
+	//---------------------- Switch Operation end ----------------------//
 	//---------------------- page operations ----------------------//
 	deleteLink(linkId){
 		var key = this.getIndex(linkId);
 		this.linkstableservice.deleteLink(linkId);
-		this.linkdata = this.linkstableservice.getLinks(this.page.current);
-		// var index = this.linkdata.indexOf(this.linkdata[key], 0);
-		// if (index > -1) {
-		// 	this.linkdata.splice(index, 1);
-		// }
-		this.totalCount = this.linkstableservice.getTotalCount();
-		this.update_pagination(this.totalCount);
+		this.linkstableservice.getLinks(this.page.current).subscribe(data =>{
+			this.linkdata = data;
+		});
+
+		this.linkstableservice.getTotalCount().subscribe(data =>{
+			this.totalCount = data[0]['count'];
+			this.update_pagination(this.totalCount);
+		});
 	}
 	edit(editId){
 		var linkIndex = this.getIndex(editId);
 		if(this.linkdata[linkIndex].edit){
 			this.linkdata[linkIndex].edit = false;
-			console.log();
 		}
 		else{
 			this.linkdata[linkIndex].edit = true;
@@ -73,25 +96,27 @@ export class LinksTableComponent implements OnInit {
 	}
 	downvote(id){
 		var index = this.getIndex(id);
-		this.linkdata[index].upvote = this.linkdata[index].upvote-1;
+		this.linkdata[index].vote = this.linkdata[index].vote-1;
+		this.linkstableservice.updatevote(this.linkdata[index].vote,parseInt(id)).subscribe();
 	}
 	upvote(id){
 		var index = this.getIndex(id);
-		this.linkdata[index].upvote = this.linkdata[index].upvote+1;
+		this.linkdata[index].vote =  this.linkdata[index].vote+1;
+		this.linkstableservice.updatevote(this.linkdata[index].vote,parseInt(id)).subscribe();
 
 	}
 	//---------------------- page operations ----------------------//
-	
+
 	//---------------------- Sorting ----------------------//
-	sortByupVote(value){
+	sortByvote(value){
 		var byDate = this.linkdata.slice(0);
 		if(value){
 			byDate.sort(function(a,b) {
-				return a.upvote - b.upvote;
+				return a.vote - b.vote;
 			});
 		}else{
 			byDate.sort(function(a,b) {
-				return b.upvote - a.upvote;
+				return b.vote - a.vote;
 			});
 		}
 		this.linkdata = byDate;
@@ -137,7 +162,7 @@ export class LinkData  {
 	id: number;
 	name: string;
 	description: string;
-	upvote: number;
+	vote: number;
 	link: string;
 	datetime: string;
 	edit: boolean = false;

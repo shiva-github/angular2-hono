@@ -1,115 +1,74 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import { HttpModule, JsonpModule } from '@angular/http';
+
 import { LinkData } from './links-table.component';
+import { config, ConfigFunctions } from '../config';
+import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs/Observable';
+
 
 @Injectable()
 export class LinksTableService {
 
-	constructor() { }
-	getLinks(pageNumber): LinkData[] {
-
-		var loadData :LinkData[];		
-		if(pageNumber == 1){
-			loadData  = [{
-				id: 1,
-				name: 'google link',
-				description: 'test description 1',
-				upvote: 5,
-				link: 'http://google.com/',
-				datetime: "1 July 2017",
-				edit: false
-			},
-			{
-				id: 2,
-				name: 'yahoo link',
-				description: 'test description 2',
-				upvote: 3,
-				link: 'http://yahoo.com/',
-				datetime: "9 April 2016",
-				edit: false
-			},
-			{
-				id: 3,
-				name: 'abc link',
-				description: 'test description 3',
-				upvote: 3,
-				link: 'http://askdfj.com/',
-				datetime: "9 April 2015",
-				edit: false
-			},
-			{
-				id: 4,
-				name: 'abc link',
-				description: 'test description 4',
-				upvote: 4,
-				link: 'http://askdfj.com/',
-				datetime: "9 April 2014",
-				edit: false
-			},
-			{
-				id: 5,
-				name: 'abc link',
-				description: 'test description 5',
-				upvote: 5,
-				link: 'http://askdfj.com/',
-				datetime: "9 April 2015",
-				edit: false
-			}
-			];
-		}else{
-			loadData  = [{
-				id: 6,
-				name: 'google link',
-				description: 'test description 6',
-				upvote: 5,
-				link: 'http://google.com/',
-				datetime: "6 July 2017",
-				edit: false
-			},
-			{
-				id: 7,
-				name: 'yahoo link',
-				description: 'test description 7',
-				upvote: 3,
-				link: 'http://yahoo.com/',
-				datetime: "9 April 7016",
-				edit: false
-			},
-			{
-				id: 8,
-				name: 'abc link',
-				description: 'test description 8',
-				upvote: 8,
-				link: 'http://askdfj.com/',
-				datetime: "9 April 2015",
-				edit: false
-			},
-			{
-				id: 9,
-				name: 'abc link',
-				description: 'test description 9',
-				upvote: 9,
-				link: 'http://askdfj.com/',
-				datetime: "9 April 2014",
-				edit: false
-			},
-			{
-				id: 10,
-				name: 'abc link',
-				description: 'test description 10',
-				upvote: 10,
-				link: 'http://askdfj.com/',
-				datetime: "9 April 20110",
-				edit: false
-			}
-			];
-		}
+	constructor(private _http: Http) {
 		
-		return loadData;
 	}
-	getTotalCount(){
-		return 10;
+	getLinks(pageNumber): Observable<LinkData[]>{
+		var sendData = JSON.stringify({"tagname" : "showlinks", "pageNumber": pageNumber});
+		var makeJson = "json="+sendData;
+		//post data
+		var header = new Headers();
+		header.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		header.append("Content-Type", "multipart/form-data; charset=UTF-8");
+		return this._http.post(config.serviceLink,makeJson,{
+			headers: header
+		}).map(response => {
+			var data = JSON.parse(response.json());
+			for (var i = data.length - 1; i >= 0; i--) {
+				data[i]["edit"] = false;
+				data[i]['datetime'] = ConfigFunctions.convertDate(data[i]['time']);
+				data[i]["vote"] = parseInt(data[i]["vote"]);
+				delete data[i]['time'];
+			}
+			return data;
+		});
+	}
+
+	// test Service
+
+	// test service end
+
+	getTotalCount(): Observable<any>{
+		// linksCount
+		var sendData = JSON.stringify({"tagname" : "linksCount"});
+		var makeJson = "json="+sendData;
+		//post data
+		var header = new Headers();
+		header.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		// header.append("Content-Type", "multipart/form-data; charset=UTF-8");
+		return this._http.post(config.serviceLink,makeJson,{
+			headers: header
+		}).map(response => {
+			var data = response.json();
+			return data;
+		});
+		// return 10;
 	}
 	deleteLink(recordNumber){
 		console.log(recordNumber+"record deleted...");
+	}
+	updatevote(vote,id): Observable<any>{
+		var sendData = JSON.stringify({"tagname" : "updatevote", "vote": vote,"voteid":id});
+		var makeJson = "json="+sendData;
+		//post data
+		var header = new Headers();
+		header.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		return this._http.post(config.serviceLink,makeJson,{
+			headers: header
+		}).map(response => {
+			var data = response.json();
+			return data;
+		});
 	}
 }

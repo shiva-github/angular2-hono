@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule }   from '@angular/router';
 import { FormsModule }   from '@angular/forms';
+import { HttpModule, Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -27,6 +30,7 @@ import { UploadDocComponent } from './upload-doc/upload-doc.component';
   imports: [
   BrowserModule,
   FormsModule,
+  HttpModule,
   RouterModule.forRoot([
   {
     path: '',
