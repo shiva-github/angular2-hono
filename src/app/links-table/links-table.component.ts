@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { LinksTableService } from './links-table.service';
+import { config, ConfigFunctions } from '../config';
 
 @Component({
 	selector: 'app-links-table',
 	templateUrl: './links-table.component.html',
-	styleUrls: ['./links-table.component.css']
+	styleUrls: ['./links-table.component.css'],
+	providers: [LinksTableService]
 })
 export class LinksTableComponent implements OnInit {
 	page: Page = {
@@ -13,66 +16,36 @@ export class LinksTableComponent implements OnInit {
 	recPerPage:number = 5;
 	showPageNumbers :number[]; //for pagination
 	linkdata :LinkData[];
-	loadData :LinkData[] = [{
-		id: 1,
-		name: 'google link',
-		description: 'test description 1',
-		upvote: 5,
-		link: 'http://google.com/',
-		datetime: "1 July 2017",
-		edit: false
-	},
-	{
-		id: 2,
-		name: 'yahoo link',
-		description: 'test description 2',
-		upvote: 3,
-		link: 'http://yahoo.com/',
-		datetime: "9 April 2016",
-		edit: false
-	},
-	{
-		id: 3,
-		name: 'abc link',
-		description: 'test description 3',
-		upvote: 3,
-		link: 'http://askdfj.com/',
-		datetime: "9 April 2015",
-		edit: false
-	},
-	{
-		id: 4,
-		name: 'abc link',
-		description: 'test description 4',
-		upvote: 4,
-		link: 'http://askdfj.com/',
-		datetime: "9 April 2014",
-		edit: false
-	},
-	{
-		id: 5,
-		name: 'abc link',
-		description: 'test description 5',
-		upvote: 5,
-		link: 'http://askdfj.com/',
-		datetime: "9 April 2015",
-		edit: false
-	}
-	];
+	linkstableservice: LinksTableService;
 	totalCount: number;
-	constructor() { 
+	switch: boolean;
+	constructor(linkstableservice: LinksTableService) { 
+		this.linkstableservice = linkstableservice;
 		this.page.current = 1;
-		this.totalCount = this.loadData.length;
-		this.linkdata = this.loadData;
-		this.update_pagination(this.totalCount);
+		this.totalCount = 11;
 	}
 	ngOnInit() {
+		//show all links
+		this.linkstableservice.getLinks(1).subscribe(data =>{
+			this.linkdata = data;
+		});
+		// update count for the total count
+		this.linkstableservice.getTotalCount().subscribe(data =>{
+			this.totalCount = data[0]['count'];
+			this.update_pagination(this.totalCount);
+		});
 	}
 	//---------------------- pagination chnage ----------------------//
 	updatePage(value){
 		if(value != this.page.current){
 			this.page.current = value;
 			// service call for record of the page
+			this.linkstableservice.getLinks(value).subscribe(data =>{
+				this.linkdata = data;
+			},
+			err =>{
+				console.log(err);
+			});
 		}
 		// load current data
 	}
@@ -87,47 +60,63 @@ export class LinksTableComponent implements OnInit {
 		this.page.size = ab.length;
 	}
 	//---------------------- pagination chnage ----------------------//
-	
+
+	//---------------------- Switch Operation start ----------------------//
+	switchView(){
+		if(this.switch){
+			console.log(true);
+		}
+		if(!this.switch){
+			console.log(false);
+		}
+		
+	}
+	//---------------------- Switch Operation end ----------------------//
 	//---------------------- page operations ----------------------//
 	deleteLink(linkId){
 		var key = this.getIndex(linkId);
-		var index = this.linkdata.indexOf(this.linkdata[key], 0);
-		if (index > -1) {
-			this.linkdata.splice(index, 1);
-		}
-		this.totalCount = this.totalCount-1;
-		this.update_pagination(this.totalCount);
+		this.linkstableservice.deleteLink(linkId);
+		this.linkstableservice.getLinks(this.page.current).subscribe(data =>{
+			this.linkdata = data;
+		});
+
+		this.linkstableservice.getTotalCount().subscribe(data =>{
+			this.totalCount = data[0]['count'];
+			this.update_pagination(this.totalCount);
+		});
 	}
 	edit(editId){
-		// console.log(this.getIndex(editId));
-		if(this.linkdata[editId-1].edit){
-			this.linkdata[editId-1].edit = false;
+		var linkIndex = this.getIndex(editId);
+		if(this.linkdata[linkIndex].edit){
+			this.linkdata[linkIndex].edit = false;
 		}
 		else{
-			this.linkdata[editId-1].edit = true;
+			this.linkdata[linkIndex].edit = true;
 		}
 	}
 	downvote(id){
 		var index = this.getIndex(id);
-		this.linkdata[index].upvote = this.linkdata[index].upvote-1;
+		this.linkdata[index].vote = this.linkdata[index].vote-1;
+		this.linkstableservice.updatevote(this.linkdata[index].vote,parseInt(id)).subscribe();
 	}
 	upvote(id){
 		var index = this.getIndex(id);
-		this.linkdata[index].upvote = this.linkdata[index].upvote+1;
+		this.linkdata[index].vote =  this.linkdata[index].vote+1;
+		this.linkstableservice.updatevote(this.linkdata[index].vote,parseInt(id)).subscribe();
 
 	}
 	//---------------------- page operations ----------------------//
-	
+
 	//---------------------- Sorting ----------------------//
-	sortByupVote(value){
+	sortByvote(value){
 		var byDate = this.linkdata.slice(0);
 		if(value){
 			byDate.sort(function(a,b) {
-				return a.upvote - b.upvote;
+				return a.vote - b.vote;
 			});
 		}else{
 			byDate.sort(function(a,b) {
-				return b.upvote - a.upvote;
+				return b.vote - a.vote;
 			});
 		}
 		this.linkdata = byDate;
@@ -173,7 +162,7 @@ export class LinkData  {
 	id: number;
 	name: string;
 	description: string;
-	upvote: number;
+	vote: number;
 	link: string;
 	datetime: string;
 	edit: boolean = false;

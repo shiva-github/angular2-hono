@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule }   from '@angular/router';
 import { FormsModule }   from '@angular/forms';
+import { HttpModule, Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -9,6 +12,10 @@ import { DataFormComponent } from './data-form/data-form.component';
 import { FooterComponent } from './footer/footer.component';
 import { LinksTableComponent } from './links-table/links-table.component';
 import { LoginComponent } from './login/login.component';
+import { UploadDocComponent } from './upload-doc/upload-doc.component';
+
+
+// import { AuthService } from './authorization.service';
 
 @NgModule({
   declarations: [
@@ -17,11 +24,13 @@ import { LoginComponent } from './login/login.component';
   DataFormComponent,
   FooterComponent,
   LinksTableComponent,
-  LoginComponent
+  LoginComponent,
+  UploadDocComponent
   ],
   imports: [
   BrowserModule,
   FormsModule,
+  HttpModule,
   RouterModule.forRoot([
   {
     path: '',
@@ -30,7 +39,7 @@ import { LoginComponent } from './login/login.component';
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: LoginComponent
   },
   {
     path: 'formdata',
@@ -39,6 +48,10 @@ import { LoginComponent } from './login/login.component';
   {
     path: 'links',
     component: LinksTableComponent
+  },
+  {
+    path: 'upload-doc',
+    component: UploadDocComponent
   }
   ])
   ],

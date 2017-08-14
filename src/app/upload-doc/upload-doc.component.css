@@ -1,0 +1,42 @@
+.box__uploading,
+.box__success,
+.box__error {
+	display: none;
+}
+.box.has-advanced-upload {
+	background-color: white;
+	outline: 2px dashed black;
+	outline-offset: -10px;
+}
+.box__input{
+	display: table;
+	background-color: #f7f7f7;
+	padding: 10px;
+}
+.box.has-advanced-upload .box__dragndrop {
+	display: inline;
+}
+.box__label{
+	font-size: 18px;
+	height: 56px;
+	width: 325px;
+	border: 1px dashed #ccc;
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+	background-color: #fff;
+	transition: height 0.25s ease-in;
+}
+.box__file{
+	display: none;
+}
+.box.is-dragover {
+	background-color: grey;
+}
+.breakword{
+	word-break: break-word;
+}
+.box__label.hover-box{
+	height: 100px !important;
+	transition: height 0.15s ease-out !important;
+}
