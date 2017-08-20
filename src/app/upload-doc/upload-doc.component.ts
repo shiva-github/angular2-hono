@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { UploadDocServiceService } from './upload-doc-service.service';
 import  *  as  $ from 'jquery';
 // import { FileDropDirective } from 'angular2-file-drop';
 
 @Component({
 	selector: 'app-upload-doc',
 	templateUrl: './upload-doc.component.html',
-	styleUrls: ['./upload-doc.component.css']
+	styleUrls: ['./upload-doc.component.css'],
+	providers: [UploadDocServiceService]
 })
 export class UploadDocComponent implements OnInit {
 	// uploadObj: uploadDocData;
@@ -15,7 +17,7 @@ export class UploadDocComponent implements OnInit {
 	sdescription	: string;
 	upload_file_name: string;
 	description		: string;
-	constructor() { 
+	constructor(private uploadFilesService: UploadDocServiceService) { 
 		this.hidethis = false;
 		this.upload_file_name = "No File Selected.";
 		this.sdescription ="abc short name";
@@ -56,9 +58,13 @@ export class UploadDocComponent implements OnInit {
 		this.settingClass = false;
 	}
 	submitClick(){
-		console.log(this.sdescription);
-		console.log(this.selectedFile);
-		console.log(this.description);
+		var sendData: any;
+		sendData = {
+			"name": this.sdescription,
+			"description": this.description,
+			"tagname": "upload-form"
+		};
+		this.uploadFilesService.uploadFileService(sendData, this.selectedFile);
 	}
 }
 export class uploadDocData {
