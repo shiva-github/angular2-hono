@@ -16,7 +16,7 @@ export class LinksTableComponent implements OnInit {
 	};
 	showPageNumbers :number[]; //for pagination
 	linkdata :LinkData[];
-	linkstableservice: LinksTableService;
+	// linkstableservice: LinksTableService;
 	totalCount: number;
 
 	//common variables.
@@ -32,7 +32,7 @@ export class LinksTableComponent implements OnInit {
 	DocshowPageNumbers: number[];
 	totalDocCount: number;
 
-	constructor(linkstableservice: LinksTableService) { 
+	constructor(private linkstableservice: LinksTableService) { 
 		this.linkstableservice = linkstableservice;
 		this.page.current = 1;
 		this.totalCount = 11;
