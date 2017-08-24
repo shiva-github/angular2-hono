@@ -13,6 +13,7 @@ import { FooterComponent } from './footer/footer.component';
 import { LinksTableComponent } from './links-table/links-table.component';
 import { LoginComponent } from './login/login.component';
 import { UploadDocComponent } from './upload-doc/upload-doc.component';
+import { DiaryComponent } from './diary/diary.component';
 
 
 // import { AuthService } from './authorization.service';
@@ -25,7 +26,8 @@ import { UploadDocComponent } from './upload-doc/upload-doc.component';
   FooterComponent,
   LinksTableComponent,
   LoginComponent,
-  UploadDocComponent
+  UploadDocComponent,
+  DiaryComponent
   ],
   imports: [
   BrowserModule,
@@ -52,6 +54,10 @@ import { UploadDocComponent } from './upload-doc/upload-doc.component';
   {
     path: 'upload-doc',
     component: UploadDocComponent
+  },
+  {
+    path: 'diary',
+    component: DiaryComponent
   }
   ])
   ],
