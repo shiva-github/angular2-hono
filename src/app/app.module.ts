@@ -58,6 +58,11 @@ import { DiaryComponent } from './diary/diary.component';
   {
     path: 'diary',
     component: DiaryComponent
+  },
+  { 
+    path: '**',
+    redirectTo: 'login',
+    pathMatch: 'full'
   }
   ])
   ],

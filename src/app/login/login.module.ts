@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule }   from '@angular/router';
+
 
 
 import { DataFormComponent } from '../data-form/data-form.component';
@@ -10,26 +10,7 @@ import { LoginComponent } from './login.component';
 
 @NgModule({
 	imports: [
-	CommonModule,
-	RouterModule.forRoot([
-		{
-			path: '',
-			redirectTo: '/login',
-			pathMatch: 'full'
-		},
-		{
-			path: 'login',
-			component: LoginComponent
-		},
-		{
-			path: 'formdata',
-			component: DataFormComponent
-		},
-		{
-			path: 'links',
-			component: LinksTableComponent
-		}
-		])
+	CommonModule
 	],
 	declarations: [DataFormComponent, LinksTableComponent, LoginModule]
 })

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule, Routes, Router } from '@angular/router';
+
 import { LinksTableService } from './links-table.service';
 import { config, ConfigFunctions } from '../config';
 
@@ -32,7 +34,10 @@ export class LinksTableComponent implements OnInit {
 	DocshowPageNumbers: number[];
 	totalDocCount: number;
 
-	constructor(private linkstableservice: LinksTableService) { 
+	constructor(private linkstableservice: LinksTableService,private router: Router) { 
+		if(!ConfigFunctions.checkCookie("user")){
+			this.router.navigate(['login']);	
+		}
 		this.linkstableservice = linkstableservice;
 		this.page.current = 1;
 		this.totalCount = 11;
@@ -123,7 +128,7 @@ export class LinksTableComponent implements OnInit {
 			
 		}
 		if(!this.switch){
-			console.log(false);
+			
 		}
 		
 	}
