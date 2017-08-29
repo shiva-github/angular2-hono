@@ -1,43 +1,38 @@
-<div class="container">
-	<div class="row">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-bg">
-			<form>
-				<div class="bottom-margin row">
-					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-						<label class="fix-label pull-right">Name: </label>
-					</div>
-					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-						<input type="text" [(ngModel)]="sdescription" name="sdescription" class="inputbox2">
-					</div>
-				</div>
-				<div class="bottom-margin row">
-					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-						<label class="fix-label pull-right">Description: </label>
-					</div>
-					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-						<div class="box__input">
-						<input class="box__file" type="file" name="file1" id="file" (change)="onFileChange($event)" />
-							<label for="file" [ngClass]="{'box__label': true, 'hover-box': settingClass}" (drop)="drop($event)" (dragover)="allowDrop($event)" (dragleave)="dragLeave($event)"><span class="hidespan"  *ngIf="!hidethis" name="hidethis" ><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</span><span *ngIf="hidethis" class="breakword">{{upload_file_name}}</span></label>
-						</div>
-						<div class="box__uploading">Uploading&hellip;</div>
-						<div class="box__success">Done!</div>
-						<div class="box__error">Error! <span></span>.</div>
-					</div>
-				</div>
-				<div class="bottom-margin row">
-					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-						<label class="fix-label pull-right">Description: </label>
-					</div>
-					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-						<textarea class="inputbox2 textarea1" [(ngModel)]="description" name="description"></textarea>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-						<input type="submit" name="submit" class="btn btn-success" (click)="submitClick()">
-					</div>
-				</div>
-			</form>
+
+<form>
+	<div class="bottom-margin row">
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+			<label class="fix-label pull-right">Name: </label>
+		</div>
+		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+			<input type="text" [(ngModel)]="sdescription" name="sdescription" class="inputbox2">
 		</div>
 	</div>
-</div>
+	<div class="bottom-margin row">
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+			<label class="fix-label pull-right">Description: </label>
+		</div>
+		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+			<div class="box__input">
+				<input class="box__file" type="file" name="file1" id="file" (change)="onFileChange($event)" />
+				<label for="file" [ngClass]="{'box__label': true, 'hover-box': settingClass}" (drop)="drop($event)" (dragover)="allowDrop($event)" (dragleave)="dragLeave($event)"><span class="hidespan"  *ngIf="!hidethis" name="hidethis" ><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</span><span *ngIf="hidethis" class="breakword">{{upload_file_name}}</span></label>
+			</div>
+			<div class="box__uploading">Uploading&hellip;</div>
+			<div class="box__success">Done!</div>
+			<div class="box__error">Error! <span></span>.</div>
+		</div>
+	</div>
+	<div class="bottom-margin row">
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+			<label class="fix-label pull-right">Description: </label>
+		</div>
+		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+			<textarea class="inputbox2 textarea1" [(ngModel)]="description" name="description"></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+			<input type="submit" name="submit" class="btn btn-success" (click)="submitClick()">
+		</div>
+	</div>
+</form>

@@ -47,14 +47,16 @@
 						</ul>
 					</div>
 
-					<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 data-main">
-						<h3 class="text-center">Contents of {{completeDiaryData.recordDate}}</h3>
-						<div class="div">
-							<ul> 
-								<li *ngFor="let item of listItems">
-									<a href="javascript:void(0);" (click)="populateItem(item.id)">{{item.title}}</a>
-								</li>
-							</ul>
+					<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 data-main">
+							<h3 class="text-center">Contents of {{completeDiaryData.recordDate}}</h3>
+							<div class="div">
+								<ul> 
+									<li *ngFor="let item of listItems">
+										<a href="javascript:void(0);" (click)="populateItem(item.id)">{{item.title}}</a>
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -82,7 +84,7 @@
 		</div>
 		<div class="container mb10">
 			<div class="row">
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 data-main pos-r bg1">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 data-main1 pos-r bg1">
 					<div class="data-show">
 						<div class="data-title"><h2 class="text-center">{{completeDiaryData.title}}</h2></div>
 						<div class="data-date text-right">{{completeDiaryData.recordDate}}</div>

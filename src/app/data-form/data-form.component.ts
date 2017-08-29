@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataFormService } from './data-form.service';
-
+import { UploadDocComponent } from '../upload-doc/upload-doc.component';
 @Component({
 	selector: 'app-data-form',
 	templateUrl: './data-form.component.html',

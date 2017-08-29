@@ -113,6 +113,10 @@
     overflow: auto;
     background-color: #f3d3f9;
 }
+.data-main1{
+    height: 500px;
+    overflow: auto;
+}
 .data-show:before{
    content: “ ”;
    background: inherit; 

@@ -52,10 +52,6 @@ import { DiaryComponent } from './diary/diary.component';
     component: LinksTableComponent
   },
   {
-    path: 'upload-doc',
-    component: UploadDocComponent
-  },
-  {
     path: 'diary',
     component: DiaryComponent
   },
