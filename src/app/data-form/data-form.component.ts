@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule, Routes, Router } from '@angular/router';
+import { ConfigFunctions } from '../config';
+
+
 import { DataFormService } from './data-form.service';
 import { UploadDocComponent } from '../upload-doc/upload-doc.component';
+
 @Component({
 	selector: 'app-data-form',
 	templateUrl: './data-form.component.html',
@@ -12,9 +17,13 @@ export class DataFormComponent implements OnInit {
 	lname: string;
 	lurl: string;
 	ltype: string;
+	diaryTitle: string;
+	diaryDescription: string;
 	description: string;
-	constructor(private formSubmitService: DataFormService) {
-		
+	constructor(private formSubmitService: DataFormService,private router: Router) {
+		if(!ConfigFunctions.checkCookie("user")){
+			this.router.navigate(['login']);	
+		}		
 	}
 	ngOnInit() {
 	}
@@ -30,6 +39,19 @@ export class DataFormComponent implements OnInit {
 			this.lname = "";
 			this.lurl = "";
 			this.description = "";
+		});
+	}
+	submitDiaryData(){
+		var submitData = {
+			"title": this.diaryTitle,
+			"description" : this.diaryDescription,
+			"tagname" : "diaryInsert"
+		}
+
+		this.formSubmitService.insertData(submitData).subscribe(data=>{
+			console.log(data);
+			this.diaryTitle = "";
+			this.diaryDescription = "";
 		});
 	}
 }

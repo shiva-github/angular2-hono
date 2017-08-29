@@ -4,6 +4,7 @@
 			<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab" href="#home">Add Links</a></li>
 				<li><a data-toggle="tab" href="#menu1">File Uploads</a></li>
+				<li><a data-toggle="tab" href="#menu2">My Diary</a></li>
 			</ul>
 			<div class="tab-content">
 				<div id="home" class="tab-pane fade in active">
@@ -37,7 +38,7 @@
 						</div>
 						<div class="bottom-margin row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-								<label class="fix-label pull-right">Link Type: </label>
+								<label class="fix-label pull-right">Description: </label>
 							</div>
 							<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 								<textarea class="inputbox2 textarea1" [(ngModel)]="description" name="description"></textarea>
@@ -52,6 +53,32 @@
 				</div>
 				<div id="menu1" class="tab-pane fade">
 					<app-upload-doc></app-upload-doc>
+				</div>
+				<div id="menu2" class="tab-pane fade">
+					<form>
+						<div class="bottom-margin row">
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								<label class="fix-label pull-right">Title: </label>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+								<input type="text" [(ngModel)]="diaryTitle" name="diaryTitle" class="inputbox2">
+							</div>
+						</div>
+						
+						<div class="bottom-margin row">
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								<label class="fix-label pull-right">Description: </label>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+								<textarea class="inputbox2 textarea1" [(ngModel)]="diaryDescription" name="diaryDescription"></textarea>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+								<input type="submit" name="submit" class="btn btn-success" (click)="submitDiaryData()">
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
