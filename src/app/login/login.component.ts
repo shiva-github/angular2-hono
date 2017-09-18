@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 		console.log(loginObj);
 		if(this.username == "SHIVA" && this.password == "shirbhate"){
 			ConfigFunctions.setCookie("user","shiva22222", 1);
-			this.router.navigate(['links']);	
+			this.router.navigate(['diary']);	
 		}else{
 			console.log("Error in login");
 		}
