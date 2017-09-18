@@ -9,9 +9,9 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class DataFormService {
-
+	serviceURL: string;
 	constructor(private _http: Http) {
-		
+		this.serviceURL = config.serviceLink;
 	}
 	insertData(formData: any): Observable<any>{
 		var sendData = JSON.stringify(formData);
@@ -20,7 +20,7 @@ export class DataFormService {
 		//post data
 		var header = new Headers();
 		header.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-		return this._http.post(config.serviceLink,makeJson,{
+		return this._http.post(this.serviceURL,makeJson,{
 			headers: header
 		}).map(response => {
 			var data = response.json();

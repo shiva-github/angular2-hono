@@ -23,9 +23,15 @@ export class LoginComponent implements OnInit {
 	ngOnInit() {
 	}
 	loginClick(){
+		let loginObj = {
+			user: this.username,
+			pass: this.password,
+			tagname: "userLogin"
+		}
+		console.log(loginObj);
 		if(this.username == "SHIVA" && this.password == "shirbhate"){
 			ConfigFunctions.setCookie("user","shiva22222", 1);
-			this.router.navigate(['diary']);	
+			this.router.navigate(['links']);	
 		}else{
 			console.log("Error in login");
 		}

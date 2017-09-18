@@ -44,42 +44,50 @@ export class LinksTableComponent implements OnInit {
 		this.totalDocCount = 1;
 	}
 	ngOnInit() {
+		this.linkdata = this.linkstableservice.getLinks1(1);
 		//show all links
-		this.linkstableservice.getLinks(1).subscribe(data =>{
-			this.linkdata = data;
-		});
+		// this.linkstableservice.getLinks(1).subscribe(data =>{
+		// 	this.linkdata = data;
+		// });
 		
 		// update count for the total count for links
-		this.linkstableservice.getTotalCount().subscribe(data =>{
-			this.totalCount = data[0]['count'];
-			this.update_pagination(this.totalCount);
-		});
+		// this.linkstableservice.getTotalCount().subscribe(data =>{
+		// 	this.totalCount = data[0]['count'];
+		// 	this.update_pagination(this.totalCount);
+		// });
 		
 
 
 		//show all Documents
-		this.linkstableservice.getDocuments(1).subscribe(data =>{
-			this.documentData = data;
-		});
+		// this.linkstableservice.getDocuments(1).subscribe(data =>{
+		// 	this.documentData = data;
+		// });
 
-		// update count for the total count for links
-		this.linkstableservice.getTotalCountDoc().subscribe(data =>{
-			this.totalDocCount = data[0]['count'];
-			this.update_paginationDocs(this.totalDocCount);
-		});
+		// // update count for the total count for links
+		// this.linkstableservice.getTotalCountDoc().subscribe(data =>{
+		// 	this.totalDocCount = data[0]['count'];
+		// 	this.update_paginationDocs(this.totalDocCount);
+		// });
 		
 	}
 	//---------------------- pagination chnage ----------------------//
 	updatePage(value){
 		if(value != this.page.current){
 			this.page.current = value;
+
+			// test app data start 
+			this.linkdata = this.linkstableservice.getLinks1(value);
+
+			// test app data end 
+
+
 			// service call for record of the page
-			this.linkstableservice.getLinks(value).subscribe(data =>{
-				this.linkdata = data;
-			},
-			err =>{
-				console.log(err);
-			});
+			// this.linkstableservice.getLinks(value).subscribe(data =>{
+			// 	this.linkdata = data;
+			// },
+			// err =>{
+			// 	console.log(err);
+			// });
 		}
 		// load current data
 	}
@@ -135,16 +143,19 @@ export class LinksTableComponent implements OnInit {
 	//---------------------- Switch Operation end ----------------------//
 	//---------------------- page operations ----------------------//
 	deleteLink(linkId){
-		var key = this.getIndex(linkId);
-		this.linkstableservice.deleteLink(linkId);
-		this.linkstableservice.getLinks(this.page.current).subscribe(data =>{
-			this.linkdata = data;
-		});
+		// var key = this.getIndex(linkId);
+		// this.linkstableservice.deleteLink(linkId);
+		// // test app data start 
+		// this.linkdata = this.linkstableservice.getLinks1(this.page.current);
+		// // test app data end 
+		// // this.linkstableservice.getLinks(this.page.current).subscribe(data =>{
+		// // 	this.linkdata = data;
+		// // });
 
-		this.linkstableservice.getTotalCount().subscribe(data =>{
-			this.totalCount = data[0]['count'];
-			this.update_pagination(this.totalCount);
-		});
+		// this.linkstableservice.getTotalCount().subscribe(data =>{
+		// 	this.totalCount = data[0]['count'];
+		// 	this.update_pagination(this.totalCount);
+		// });
 	}
 	edit(editId){
 		var linkIndex = this.getIndex(editId);
@@ -158,12 +169,12 @@ export class LinksTableComponent implements OnInit {
 	downvote(id){
 		var index = this.getIndex(id);
 		this.linkdata[index].vote = this.linkdata[index].vote-1;
-		this.linkstableservice.updatevote(this.linkdata[index].vote,parseInt(id)).subscribe();
+		// this.linkstableservice.updatevote(this.linkdata[index].vote,parseInt(id)).subscribe();
 	}
 	upvote(id){
 		var index = this.getIndex(id);
 		this.linkdata[index].vote =  this.linkdata[index].vote+1;
-		this.linkstableservice.updatevote(this.linkdata[index].vote,parseInt(id)).subscribe();
+		// this.linkstableservice.updatevote(this.linkdata[index].vote,parseInt(id)).subscribe();
 
 	}
 	//---------------------- page operations ----------------------//

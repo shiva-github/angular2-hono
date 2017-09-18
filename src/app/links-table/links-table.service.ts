@@ -35,6 +35,35 @@ export class LinksTableService {
 			return data;
 		});
 	}
+	// service for test app
+	
+	getLinks1(pageNumber): LinkData[]{
+		if(pageNumber == 1){
+			var response = "[{\"id\":\"1\",\"name\":\"First Doc\",\"link\":\"abc.com\",\"description\":\"Test data\",\"vote\":\"0\",\"time\":\"2017-08-15 21:19:47\"},{\"id\":\"2\",\"name\":\"Shiva Shirbhate\",\"link\":\"shiva.com\",\"description\":\"Test data 2\",\"vote\":\"0\",\"time\":\"2017-08-15 21:19:47\"},{\"id\":\"3\",\"name\":\"link name\",\"link\":\"http:\\\/\\\/url.com\\\/abc\",\"description\":\"abc\",\"vote\":\"0\",\"time\":\"2017-08-15 21:19:47\"},{\"id\":\"4\",\"name\":\"test 2\",\"link\":\"http:\\\/\\\/test2.com\\\/abc\",\"description\":\"testing works\",\"vote\":\"0\",\"time\":\"2017-08-15 21:19:47\"},{\"id\":\"5\",\"name\":\"link name\",\"link\":\"http:\\\/\\\/url.com\\\/abc\",\"description\":\"abc\",\"vote\":\"0\",\"time\":\"2017-08-15 21:19:47\"}]";
+			var data = JSON.parse(response);
+			for (var i = data.length - 1; i >= 0; i--) {
+				data[i]["edit"] = false;
+				data[i]['datetime'] = ConfigFunctions.convertDate(data[i]['time']);
+				data[i]["vote"] = parseInt(data[i]["vote"]);
+				delete data[i]['time'];
+			}
+			return data;
+		}
+		if(pageNumber == 2){
+			var response = "[{\"id\":\"6\",\"name\":\"second LInks\",\"link\":\"http:\\\/\\\/url.com\\\/abc\",\"description\":\"abc\",\"vote\":\"0\",\"time\":\"2017-08-14 08:10:51\"},{\"id\":\"7\",\"name\":\"link name3\",\"link\":\"http:\\\/\\\/url.com\\\/abc3\",\"description\":\"abc3\",\"vote\":\"0\",\"time\":\"2017-08-14 08:11:13\"},{\"id\":\"8\",\"name\":\"link name5\",\"link\":\"http:\\\/\\\/url.com\\\/abc5\",\"description\":\"abc5\",\"vote\":\"0\",\"time\":\"2017-08-14 08:12:33\"}]";
+			var data = JSON.parse(response);
+			for (var i = data.length - 1; i >= 0; i--) {
+				data[i]["edit"] = false;
+				data[i]['datetime'] = ConfigFunctions.convertDate(data[i]['time']);
+				data[i]["vote"] = parseInt(data[i]["vote"]);
+				delete data[i]['time'];
+			}
+			return data;
+		}
+	}
+	// service for test app end 
+
+
 
 	// test Service
 
