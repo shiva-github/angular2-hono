@@ -12,6 +12,11 @@
 					</div>
 					<div class="panel-body">
 						<form>
+							<div class="bottom-margin row" *ngIf="showerror">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center alert alert-danger"  style="float: none;margin: auto;">
+									<span>Please enter correct credentials.</span>
+								</div>
+							</div>
 							<div class="bottom-margin row">
 								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 									<label class="fix-label pull-right">Username: </label>

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { ConfigFunctions, config } from '../config';
+import { LoginService } from './login.service';
 
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.css']
+	styleUrls: ['./login.component.css'],
+	providers: [ LoginService ],
 })
 export class LoginComponent implements OnInit {
 	login: Login = {
@@ -15,21 +17,33 @@ export class LoginComponent implements OnInit {
 
 	username: string;
 	password: string;
-	constructor(private router: Router) {
+	showerror: boolean;
+	constructor(private router: Router, private loginService: LoginService) {
 		this.username = this.login.username;
 		this.password = this.login.password;
+		this.showerror = false;
 	}
 
 	ngOnInit() {
+		ConfigFunctions.setCookie("user","", 0);
 	}
 	loginClick(){
-		if(this.username == "SHIVA" && this.password == "shirbhate"){
-			ConfigFunctions.setCookie("user","shiva22222", 1);
-			this.router.navigate(['diary']);	
+		if ( this.username != "" && this.password != "" ){
+			this.loginService.loginAuth( this.username, this.password ).subscribe( data => {
+				// console.log(  );
+				if( data['status'] == "failure" ) {
+					this.showerror = true;
+				} else {
+					ConfigFunctions.setCookie("user", data["SHIVAtest"], 1);
+					this.router.navigate(['diary']);
+				}
+				// console.log(data[]);
+				// ConfigFunctions.setCookie("user","shiva22222", 1);
+				// this.router.navigate(['diary']);
+			});		
 		}else{
-			console.log("Error in login");
+			this.showerror = true;
 		}
-		
 	}
 }
 export class Login{
