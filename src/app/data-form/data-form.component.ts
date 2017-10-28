@@ -49,7 +49,6 @@ export class DataFormComponent implements OnInit {
 		}
 
 		this.formSubmitService.insertData(submitData).subscribe(data=>{
-			console.log(data);
 			this.diaryTitle = "";
 			this.diaryDescription = "";
 		});

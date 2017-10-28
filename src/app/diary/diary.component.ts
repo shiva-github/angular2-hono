@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule, Routes, Router } from '@angular/router';
+
+import { DiaryService } from './diary.service';
+import { config, ConfigFunctions } from '../config';
 
 @Component({
 	selector: 'app-diary',
 	templateUrl: './diary.component.html',
-	styleUrls: ['./diary.component.css']
+	styleUrls: ['./diary.component.css'],
+	providers: [DiaryService]
 })
 export class DiaryComponent implements OnInit {
 	update_year: number;
@@ -14,10 +19,14 @@ export class DiaryComponent implements OnInit {
 	completeDiaryData: mainDiaryData;
 	today: Date;
 	currentActiveDate:any;
-
+	finalClickDate: string;
 	listItems: any;
-	constructor() {
-		
+
+
+	constructor(private diaryService: DiaryService,private router: Router) {
+		if(!ConfigFunctions.checkCookie("user")){
+			this.router.navigate(['login']);	
+		}		
 	}
 
 	ngOnInit() {
@@ -32,47 +41,39 @@ export class DiaryComponent implements OnInit {
 		
 		// date fetch
 		var clickdate= this.today.getDate()+" "+this.today.toString().split(" ")[1]+" "+this.today.getFullYear();
+		this.finalClickDate = clickdate;
 		this.completeDiaryData.recordDate = clickdate;
 		this.completeDiaryData.content = "This is content";
 		this.completeDiaryData.title = "this is title";
 	}
 	// working area for date MSManipulationEvent
-	getDateForRecordFetch(fetchRecordData):void{
+	getDateForRecordFetch(fetchRecordData):void {
 		
 		this.days[this.currentActiveDate -1].activeClickDate = false;
 		this.days[fetchRecordData.id].activeClickDate = true;
 		this.currentActiveDate =  fetchRecordData.date;
-
-		let listArray = [{
-			"id": 1,
-			"title": "this is title 1"
-		},{
-			"id": 2,
-			"title": "this is title 2"
-		},{
-			"id": 3,
-			"title": "this is title 3"
-		}];
-		this.listItems = listArray;
 		
 		var clickdate= fetchRecordData.date +" "+ fetchRecordData.month +" "+ fetchRecordData.year;
-		this.completeDiaryData.recordDate = clickdate;
+		// this.completeDiaryData.recordDate = clickdate;
+		this.finalClickDate = clickdate;
+		let sendDate = new Date(clickdate);
+		var mon = ("0" + (sendDate.getMonth()+1)).slice(-2);
+		var dt = ("0" + sendDate.getDate()).slice(-2)
+		let sendDate1 = sendDate.getFullYear()+"-"+mon+"-"+dt;
+
+		//service call for getting data for the clicked date.
+		this.diaryService.getDateContents(sendDate1).subscribe(data =>{
+			this.listItems = data;
+		});
 	}
 	populateItem(id){
-		let listArray = [{
-			"id": 1,
-			"title": "this is title 1"
-		},{
-			"id": 2,
-			"title": "this is title 2"
-		},{
-			"id": 3,
-			"title": "this is title 3"
-		}];
-		console.log(id);
 
-		this.completeDiaryData.content = "This is the final content";
-		this.completeDiaryData.title = listArray[id-1].title;
+		this.diaryService.populateDiaryContentForId(id).subscribe(data =>{
+			this.completeDiaryData.content = data[0]["content"];
+			this.completeDiaryData.title = data[0]["title"];	
+			this.completeDiaryData.recordDate = ConfigFunctions.convertDate(data[0]["time"]);	
+		});
+		
 	}
 
 
