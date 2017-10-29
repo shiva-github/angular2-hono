@@ -10,7 +10,7 @@
 			</div>
 			<div class="panel-body" *ngIf="!switch">
 				<div class="row" id="calendar1">
-					<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 calendarHeight">
+					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 calendarHeight mb10">
 						<div class="month"> 
 							<ul>
 								<li class="prev mt-10" (click)="update_yr(-1)"><a href="javascript:void(0)" class="anchorNav">&#10094;</a></li>
@@ -47,7 +47,7 @@
 						</ul>
 					</div>
 
-					<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mb10">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 data-main">
 							<h3 class="text-center">Contents of {{finalClickDate}}</h3>
 							<div class="div">
@@ -59,28 +59,24 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mb10">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 data-main">
+							<h3 class="text-center">Recent Activities</h3>
+							<div class="div">
+								<ul> 
+									<li *ngFor="let item of recentActivity">
+										<a href="javascript:void(0);" (click)="populateItem(item.id)">{{item.title}}</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+
 				</div>
 			</div>
 			<!-- table for document links -->
-
-			<!-- panel table footer  -->
-			<div class="panel-footer">
-				<!-- *ngIf="!switch"> -->
-				<div class="row">
-					<div class="col col-xs-4">
-						
-					</div>
-					<div class="col col-xs-8">
-						<ul class="pagination hidden-xs pull-right">
-
-						</ul>
-						<ul class="pagination pull-right">
-							<li><a href="#">«</a></li>
-							<li><a href="#">»</a></li>
-						</ul>
-					</div>
-				</div>
-			</div><!-- panel table footer end -->
 		</div>
 		<div class="container mb10">
 			<div class="row">

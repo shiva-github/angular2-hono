@@ -65,5 +65,15 @@ export class DiaryService {
 		});
 	}
 
-
+	getRecentRecords(count): Observable<any> {
+		var sendData = JSON.stringify({"tagname" : "recentRecords", "count": count});
+		var makeJson = "json="+sendData;
+		//post data
+		var header = new Headers();
+		header.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		return this._http.post(config.serviceLink,makeJson,{headers:header}).map(response => {
+			var data = JSON.parse(response.json());
+			return data;
+		});
+	}
 }

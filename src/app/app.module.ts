@@ -14,6 +14,7 @@ import { LinksTableComponent } from './links-table/links-table.component';
 import { LoginComponent } from './login/login.component';
 import { UploadDocComponent } from './upload-doc/upload-doc.component';
 import { DiaryComponent } from './diary/diary.component';
+import { TaskManageComponent } from './task-manage/task-manage.component';
 
 
 // import { AuthService } from './authorization.service';
@@ -27,7 +28,8 @@ import { DiaryComponent } from './diary/diary.component';
   LinksTableComponent,
   LoginComponent,
   UploadDocComponent,
-  DiaryComponent
+  DiaryComponent,
+  TaskManageComponent
   ],
   imports: [
   BrowserModule,

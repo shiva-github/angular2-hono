@@ -21,12 +21,14 @@ export class DiaryComponent implements OnInit {
 	currentActiveDate:any;
 	finalClickDate: string;
 	listItems: any;
+	recentActivity: any;
 
 
 	constructor(private diaryService: DiaryService,private router: Router) {
 		if(!ConfigFunctions.checkCookie("user")){
 			this.router.navigate(['login']);	
-		}		
+		}
+
 	}
 
 	ngOnInit() {
@@ -45,6 +47,13 @@ export class DiaryComponent implements OnInit {
 		this.completeDiaryData.recordDate = clickdate;
 		this.completeDiaryData.content = "This is content";
 		this.completeDiaryData.title = "this is title";
+
+
+		// recent activity
+		this.diaryService.getRecentRecords(5).subscribe(data =>{
+			this.recentActivity = data;
+		});
+
 	}
 	// working area for date MSManipulationEvent
 	getDateForRecordFetch(fetchRecordData):void {
